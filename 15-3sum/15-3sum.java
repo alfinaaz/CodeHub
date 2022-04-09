@@ -18,12 +18,13 @@ class Solution {
                     {
                         res.add(Arrays.asList(nums[low],nums[high],nums[i]));
                         
+                        
                         while(low<high && nums[low]==nums[low+1])
                                 low++;
             
-                        
                         low++;
                         high--;
+                        
                     }
                     
                     else if(nums[low]+nums[high]<target)
