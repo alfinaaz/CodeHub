@@ -9,8 +9,9 @@ class Solution {
          for(int i=0;i<arr.length;i++)
         {
            arr[i]=arr[i]/n;
-            if(arr[i]>1)
+            if(arr[i]>1){
                 ans=i+1;
+                break;}
         }
         
         return ans;
