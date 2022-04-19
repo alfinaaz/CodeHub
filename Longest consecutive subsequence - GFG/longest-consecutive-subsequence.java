@@ -85,6 +85,8 @@ class Solution
 	          max = Math.max(max,count);
 	          count=0;
 	        }
+	        
+	        else
 	        i++;
 	   }
 	   
