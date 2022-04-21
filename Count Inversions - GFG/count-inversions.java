@@ -44,13 +44,14 @@ class Solution
      private static long mergeSort(long arr[], int left, int right) {
         long invCount = 0;
  
-        if (right > left) {
+        if (left>=right)
+            return (long)0;
+           
             int mid = (right + left) / 2;
- 
             invCount = mergeSort(arr, left, mid);
             invCount += mergeSort(arr, mid + 1, right);
             invCount += merge(arr, left, right);
-        }
+        
         return invCount;
     }
     private static long merge(long arr[], int left, int right) {
