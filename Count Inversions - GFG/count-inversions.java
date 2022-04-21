@@ -45,7 +45,7 @@ class Solution
         long invCount = 0;
  
         if (left>=right)
-            return (long)0;
+            return 0;
            
             int mid = (right + left) / 2;
             invCount = mergeSort(arr, left, mid);
@@ -56,7 +56,7 @@ class Solution
     }
     private static long merge(long arr[], int left, int right) {
         
-        int mid=(left+right)/2 +1;
+        int mid=((left+right)/2)+1;
         int i = left, j = mid, k = 0;
         long invCount = 0;
         long temp[] = new long[(right - left + 1)];
@@ -87,8 +87,8 @@ class Solution
             j++;
         }
  
-        for (i = left, k = 0; i <= right; i++, k++) {
-            arr[i] = temp[k];
+        for (int idx = 0; idx <temp.length; idx++) {
+            arr[left+idx] = temp[idx];
         }
  
         return invCount;
