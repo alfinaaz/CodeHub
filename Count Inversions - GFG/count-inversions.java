@@ -48,7 +48,7 @@ class Solution
             return 0;
            
             int mid = (right + left) / 2;
-            invCount = mergeSort(arr, left, mid);
+            invCount += mergeSort(arr, left, mid);
             invCount += mergeSort(arr, mid + 1, right);
             invCount += merge(arr, left, right);
         
