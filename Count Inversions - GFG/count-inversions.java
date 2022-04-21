@@ -49,11 +49,13 @@ class Solution
  
             invCount = mergeSort(arr, left, mid);
             invCount += mergeSort(arr, mid + 1, right);
-            invCount += merge(arr, left, mid+1, right);
+            invCount += merge(arr, left, right);
         }
         return invCount;
     }
-    private static long merge(long arr[], int left, int mid, int right) {
+    private static long merge(long arr[], int left, int right) {
+        
+        int mid=(left+right)/2 +1;
         int i = left, j = mid, k = 0;
         long invCount = 0;
         long temp[] = new long[(right - left + 1)];
