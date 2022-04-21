@@ -56,12 +56,12 @@ class Solution
     }
     private static long merge(long arr[], int left, int right) {
         
-        int mid=((left+right)/2)+1;
-        int i = left, j = mid, k = 0;
+        int mid=((left+right)/2);
+        int i = left, j = mid+1, k = 0;
         long invCount = 0;
         long temp[] = new long[(right - left + 1)];
  
-        while ((i < mid) && (j <= right)) {
+        while ((i <= mid) && (j <= right)) {
             if (arr[i] <= arr[j]) {
                 temp[k] = arr[i];
                 k++;
@@ -69,13 +69,13 @@ class Solution
             } 
             else {
                 temp[k] = arr[j];
-                invCount += (mid - i);
+                invCount += (mid - i+1);
                 k++;
                 j++;
             }
         }
  
-        while (i < mid) {
+        while (i <= mid) {
             temp[k] = arr[i];
             k++;
             i++;
