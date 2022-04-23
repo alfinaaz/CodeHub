@@ -129,7 +129,7 @@ class Solution {
         int r = util(root.right);
 
         // storing the maximum possible value of l+r+1 in diameter.
-        if (l + r + 1 > dia) dia = l + r + 1;
+        dia=Math.max(dia,l+r+1);
 
         // returning height of subtree.
         return 1 + Math.max(l, r);
