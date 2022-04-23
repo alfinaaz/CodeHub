@@ -116,30 +116,32 @@ class GfG {
 
 class Solution {
     // Function to return the diameter of a Binary Tree.
-     int res = 0;
+  
 
     // Function to find the diameter of a Binary Tree.
-    public int util(Node root) {
+    int res=0;
+    public int diameter1(Node root) {
         // if node becomes null, we return 0.
         if (root == null) return 0;
 
         // calling the util function recursively for the left and
         // right subtrees to find their heights.
-        int l = util(root.left);
-        int r = util(root.right);
+        int l = diameter1(root.left);
+        int r = diameter1(root.right);
 
         // storing the maximum possible value of l+r+1 in diameter.
         int temp=1 + Math.max(l, r);
         int ans =Math.max(temp,l+r+1);
         res=Math.max(res,ans);
         // returning height of subtree.
-        return 1 + Math.max(l, r);
+        return temp;
     }
 
     // Function to return the diameter of a Binary Tree.
     public int diameter(Node root) {
         // calling the function to find the result.
-        util(root);
+       
+        diameter1(root);
         // returning the result.
         return res;
     }
