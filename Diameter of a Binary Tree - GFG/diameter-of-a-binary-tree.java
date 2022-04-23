@@ -141,7 +141,7 @@ class Solution {
     public int diameter(Node root) {
         // calling the function to find the result.
        
-        diameter1(root);
+        int temp1=diameter1(root);
         // returning the result.
         return res;
     }
