@@ -10,7 +10,7 @@ class Solution {
 		if (nums[i] > increasingSequence[len - 1])
 			increasingSequence[len++] = nums[i];
 		else {
-			int position = findPositionToReplace(increasingSequence, 0, len - 1, nums[i]);
+			int position = findPositionToReplace(increasingSequence, 0, len-1, nums[i]);
 			increasingSequence[position] = nums[i];
 		}
 		
@@ -20,7 +20,7 @@ class Solution {
        public static int findPositionToReplace(int[] a, int low, int high, int x) {
 	int mid;
 	while (low <= high) {
-		mid = low + (high - low) / 2;
+		mid = (low + high ) / 2;
 		if (a[mid] == x)
 			return mid;
 		else if (a[mid] > x)
