@@ -122,7 +122,7 @@ class Solution
         int l=findMaxSumUtil(root.left);
         int r=findMaxSumUtil(root.right);
         
-        int temp=Math.max((Math.max(l,r)+root.data),root.data);
+        int temp=Math.max(Math.max(l,r)+root.data,root.data);
         int ans=Math.max(temp,l+r+root.data);
         res=Math.max(res,ans);
         
