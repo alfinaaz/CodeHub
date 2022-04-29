@@ -113,7 +113,7 @@ class Node{
 
 class Solution
 {
-    int res=Integer.MIN_VALUE;
+   int res=Integer.MIN_VALUE;
     int findMaxSumUtil(Node root){
         if(root==null){
             return 0;
