@@ -1,24 +1,10 @@
 class Solution {
+    static int mod= (int)Math.pow(10,9)+7;
     public int numTrees(int n) {
-        int[] dp=new int[n+1];
-        
-        dp[0]=1;
-        dp[1]=1;
-        
-        int total=0;
-        for(int i=2;i<=n;i++)
-        {
-            total=0;
-            for(int j=1;j<=i;j++)
-            {
-               int l=j-1;
-               int r=i-j;
-                
-            total+=dp[l]*dp[r];     
-            
-            }
-             dp[i]=total;
-        }
-        return dp[n];
-    }
+        long cat = 1;
+        for (int i = 1; i <= n; i++)
+            cat = 2 * (2 * i - 1) * cat / (i + 1);
+        return (int) cat;
+    } 
 }
+        
