@@ -8,8 +8,8 @@ class Solution {
         
         for(int i=0;i<k;i++)
         {
-            ans *= (n-i);
-            ans /= (i+1);
+            ans *= n-i;
+            ans /= i+1;
         }
         
         
