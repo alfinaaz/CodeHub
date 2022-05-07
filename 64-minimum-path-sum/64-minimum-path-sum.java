@@ -14,9 +14,7 @@ class Solution {
             for(int j=m-1;j>=0;j--)
             {
                 
-                if(i==n-1 && j==m-1)
-                    continue;
-                
+               
                 if(i<n-1 && j<m-1)
                 {
                     dp[i][j] = dp[i+1][j]<=dp[i][j+1]?dp[i+1][j]+grid[i][j]:dp[i][j+1]+grid[i][j];
