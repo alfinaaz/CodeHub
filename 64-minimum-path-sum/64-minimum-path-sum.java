@@ -3,43 +3,40 @@ class Solution {
         
         int n = grid.length;
         int m = grid[0].length;
+       
+        int[][] dp= new int[n][m];
         
-        int[][] mem= new int[n][m];
+        dp[n-1][m-1]=grid[n-1][m-1];
+        
+        for(int i=n-1;i>=0;i--)
+        {
             
-        return minPathSum(grid,0,0,n,m,mem);
-        
-    }
-    public int minPathSum(int[][] grid,int i, int j,int n,int m,int[][] mem) {
-        
-        if(n==0)
-            return 0;
-        
-        if(i==n-1 && j==m-1)
-            return grid[i][j];
-        
-        if(mem[i][j]!=0)
-            return mem[i][j];
-        
-       int sum= grid[i][j];
-        if(i<n-1 && j<m-1){
-            int x=minPathSum(grid,i+1,j,n,m,mem);  
-            int y=minPathSum(grid,i,j+1,n,m,mem);
+            for(int j=m-1;j>=0;j--)
+            {
+                
+                if(i<n-1 && j<m-1)
+                {
+                    dp[i][j] = dp[i+1][j]<=dp[i][j+1]?dp[i+1][j]+grid[i][j]:dp[i][j+1]+grid[i][j];
+                    
+                }
+               else if(i<n-1)
+                {
+                    dp[i][j] = dp[i+1][j]+grid[i][j];
+                   
+                }
+               else  if(j<m-1)
+                {
+                     
+                    dp[i][j] = dp[i][j+1]+grid[i][j];
+                    
+                  
+                }
+                
+            }
             
-            sum+= x<=y?x:y;
         }
         
-         else if(j<m-1){   
-             sum+=minPathSum(grid,i,j+1,n,m,mem);  
-             return mem[i][j]=sum;
-             
-         }
-             
-        
-         else if(i<n-1){
-             sum+=minPathSum(grid,i+1,j,n,m,mem); 
-             return mem[i][j]=sum;
-         }
-        
-     return mem[i][j]= sum;   
+        return dp[0][0];
+     
     }  
 }
