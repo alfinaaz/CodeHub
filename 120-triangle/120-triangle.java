@@ -1,26 +1,14 @@
 class Solution {
     public int minimumTotal(List<List<Integer>> triangle) {
-        int[][] mem= new int[201][201];
-        
-        for(int i=0;i<mem.length;i++)
-        {
-           Arrays.fill(mem[i],-1);
-        }
-        return helper(triangle,0,0,mem);
-    }
-    
-    public int helper(List<List<Integer>> triangle,int r, int c,int[][] mem)
-    {
-        if(r>=triangle.size())
-            return 0;
-        
-        if(mem[r][c]!=-1)
-            return mem[r][c];
-        
-      return  mem[r][c]= Math.min(helper(triangle,r+1,c,mem),helper(triangle,r+1,c+1,mem))+triangle.get(r).get(c);
-        //return mem[r][c];
-        
-        
+     int n = triangle.size();
+    	// opt[i][j] is the path sum start from one node of bottom layer to node (i,j)
+    	int[][] opt = new int[n+1][n+1];
+    	for(int i = n-1;i>=0;i--){
+    		for(int j=0;j<=i;j++){
+    			opt[i][j] = Math.min(opt[i+1][j],opt[i+1][j+1]) + triangle.get(i).get(j);
+    		}
+    	}
+    	return opt[0][0];
         
     }
 }
