@@ -23,54 +23,139 @@ class GFG{
 //User function Template for Java
 
 class Solution{
-   static int MOD = 1003;
-    static int countWays(int N, String A){
+  
+    static int countWays(int N, String S){
         // code here
-     StringBuilder symbols = new StringBuilder();
-        StringBuilder operators = new StringBuilder();
-        for(int i=0; i <A.length(); ++i) {
-            char cur = A.charAt(i);
-            if(cur=='T' || cur=='F') symbols.append(cur);
-            else operators.append(cur);
-        }
-        
-        
-        return cnt(symbols.toString().toCharArray(), operators.toString().toCharArray()) % MOD;
+    int dp[][][] = new int[N + 1][N + 1][2];
+
+        for (int row[][] : dp)
+            for (int col[] : row)
+                Arrays.fill(col, -1);
+        return parenthesis_count(S, 0, N - 1, 1, dp);
     }
-    static int cnt(char exp[] , char op[]) {
-        int n= exp.length;
-        int t[][] = new int[n][n];
-        int f[][]= new int[n][n];
-        for(int i=0 ; i < n; ++i) {
-            if(exp[i]=='T') t[i][i] = 1;
-            else f[i][i] =1;
-        }
-        for(int gap=1; gap <n; ++gap) {
-            for(int i=0, j=gap; j < n; ++i, ++j) {
-                
-                for(int g=0; g< gap; ++g) {
-                    int k = i +g;
-                    switch(op[k]) {
-                    case '&' : 
-                        t[i][j] += t[i][k] * t[k+1][j];
-                        f[i][j] += t[i][k] * f[k+1][j] + f[i][k] * t[k+1][j] + f[i][k] * f[k+1][j];
-                        break;
-                    case '|':
-                        t[i][j] += t[i][k] * t[k+1][j] + t[i][k] * f[k+1][j] + f[i][k] * t[k+1][j]; 
-                        f[i][j] +=  f[i][k] * f[k+1][j];
-                        break;
-                    case '^':
-                        t[i][j] += t[i][k] * f[k+1][j] + f[i][k] * t[k+1][j];
-                        f[i][j] += t[i][k] * t[k+1][j] + f[i][k] * f[k+1][j];
-                        break;
-                    }
-                    
-                    t[i][j] %= MOD;
-                    f[i][j] %= MOD;
-                }
+
+    public static int parenthesis_count(String str, int i,
+                                        int j, int isTrue,
+                                        int[][][] dp)
+    {
+        if (i > j)
+            return 0;
+
+        if (i == j)
+        {
+            if (isTrue == 1)
+            {
+                return (str.charAt(i) == 'T') ? 1 : 0;
+            }
+            else 
+            {
+                return (str.charAt(i) == 'F') ? 1 : 0;
             }
         }
-        
-        return t[0][n-1];
+
+        if (dp[i][j][isTrue] != -1)
+            return dp[i][j][isTrue];
+
+        int temp_ans = 0;
+
+        int leftTrue, rightTrue, leftFalse, rightFalse;
+
+        for (int k = i + 1; k <= j - 1; k = k + 2) 
+        {
+
+            if (dp[i][k - 1][1] != -1)
+                leftTrue = dp[i][k - 1][1];
+            else
+            {
+                // Count number of True in left Partition
+                leftTrue = parenthesis_count(str, i, k - 1,
+                                             1, dp);
+            }
+            if (dp[i][k - 1][0] != -1)
+                leftFalse = dp[i][k - 1][0];
+            else 
+            {
+              
+                // Count number of False in left Partition
+                leftFalse = parenthesis_count(str, i, k - 1,
+                                              0, dp);
+            }
+            if (dp[k + 1][j][1] != -1)
+                rightTrue = dp[k + 1][j][1];
+            else
+            {
+              
+                // Count number of True in right Partition
+                rightTrue = parenthesis_count(str, k + 1, j,
+                                              1, dp);
+            }
+            if (dp[k + 1][j][0] != -1)
+                rightFalse = dp[k + 1][j][0];
+            else 
+            {
+              
+                // Count number of False in right Partition
+                rightFalse = parenthesis_count(str, k + 1,
+                                               j, 0, dp);
+            }
+
+            // Evaluate AND operation
+            if (str.charAt(k) == '&')
+            {
+                if (isTrue == 1) 
+                {
+                    temp_ans
+                        = temp_ans + leftTrue * rightTrue;
+                    temp_ans = temp_ans%1003;
+                }
+                else
+                {
+                    temp_ans = temp_ans
+                               + leftTrue * rightFalse
+                               + leftFalse * rightTrue
+                               + leftFalse * rightFalse;
+                    temp_ans = temp_ans%1003;
+                }
+            }
+            // Evaluate OR operation
+            else if (str.charAt(k) == '|')
+            {
+                if (isTrue == 1)
+                {
+                    temp_ans = temp_ans
+                               + leftTrue * rightTrue
+                               + leftTrue * rightFalse
+                               + leftFalse * rightTrue;
+                    temp_ans = temp_ans%1003;
+                }
+                else
+                {
+                    temp_ans
+                        = temp_ans + leftFalse * rightFalse;
+                    temp_ans = temp_ans%1003;
+                }
+            }
+          
+            // Evaluate XOR operation
+            else if (str.charAt(k) == '^') 
+            {
+                if (isTrue == 1)
+                {
+                    temp_ans = temp_ans
+                               + leftTrue * rightFalse
+                               + leftFalse * rightTrue;
+                    temp_ans = temp_ans%1003;
+                }
+                else 
+                {
+                    temp_ans = temp_ans
+                               + leftTrue * rightTrue
+                               + leftFalse * rightFalse;
+                    temp_ans = temp_ans%1003;
+                }
+            }
+            dp[i][j][isTrue] = temp_ans;
+        }
+        return temp_ans;
     }
 }
