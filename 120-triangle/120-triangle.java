@@ -17,8 +17,8 @@ class Solution {
         if(mem[r][c]!=-1)
             return mem[r][c];
         
-        mem[r][c]= Math.min(helper(triangle,r+1,c,mem),helper(triangle,r+1,c+1,mem))+triangle.get(r).get(c);
-        return mem[r][c];
+      return  mem[r][c]= Math.min(helper(triangle,r+1,c,mem),helper(triangle,r+1,c+1,mem))+triangle.get(r).get(c);
+        //return mem[r][c];
         
         
         
