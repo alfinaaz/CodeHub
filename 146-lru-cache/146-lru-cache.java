@@ -52,13 +52,13 @@ class LRUCache {
     
     public void insert(Node node)
     {
-        if(node!=null){
-            map.put(node.key,node);
+        
+        map.put(node.key,node);
         Node headNext= head.next;
         head.next= node;
         node.prev=head;
         headNext.prev=node;
-        node.next=headNext;}
+        node.next=headNext;
     }
 }
 class Node
