@@ -35,7 +35,7 @@ public class Codec {
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
         String[] arr= data.split(",");
-        List<String> arr1 = new ArrayList<>(Arrays.asList(arr));
+        List<String> arr1 = new LinkedList<>(Arrays.asList(arr));
         
         return rdeserialize(arr1);
     }
