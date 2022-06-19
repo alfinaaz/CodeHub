@@ -21,7 +21,7 @@ public class Codec {
         if(root==null)
         {
             str+="null,";
-           
+            return str;
         }
         
         else
