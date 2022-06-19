@@ -24,15 +24,11 @@ public class Codec {
             return str;
         }
         
-        else
-        {
+        
             str+=str.valueOf(root.val)+",";
             str= serialize1(root.left,str);
             str= serialize1(root.right,str);
-            
-            
-            
-        }     
+          
         return str;
     }
 
