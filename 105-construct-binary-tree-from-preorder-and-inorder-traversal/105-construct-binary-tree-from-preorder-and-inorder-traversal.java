@@ -36,8 +36,8 @@ class Solution {
         TreeNode root = new TreeNode(rootele);
          idx++;
 
-        if(si==ei)
-            return root;
+      //  if(si==ei)
+     //       return root;
         
         
         
