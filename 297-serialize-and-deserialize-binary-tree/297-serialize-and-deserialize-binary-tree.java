@@ -29,8 +29,8 @@ public class Codec {
         
             sb.append(root.val);
             sb.append(",");
-            sb= serialize1(root.left,sb);
-            sb= serialize1(root.right,sb);
+            serialize1(root.left,sb);
+            serialize1(root.right,sb);
           
         return sb;
     }
