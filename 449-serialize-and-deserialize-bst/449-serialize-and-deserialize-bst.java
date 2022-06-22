@@ -8,55 +8,46 @@
  * }
  */
 public class Codec {
+    public StringBuilder postorder(TreeNode root, StringBuilder sb) {
+        if (root == null)
+            return sb;
+        postorder(root.left, sb);
+        postorder(root.right, sb);
+        sb.append(root.val);
+        sb.append(' ');
+        return sb;
+    }
 
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
-        
-        return  rserialize(root, "");
-        
+        StringBuilder sb = postorder(root, new StringBuilder());
+        if (sb.length() > 0)
+            sb.deleteCharAt(sb.length() - 1);
+        return sb.toString();
     }
-    
-    public String rserialize(TreeNode root,String str)
-    {
-        if(root==null)
-        {
-            str+="null,";
-            return str;
-        }
-        
-        str+=str.valueOf(root.val)+",";
-        str=rserialize(root.left,str);
-        str=rserialize(root.right,str);
-        
-        return str;
-        
+
+    public TreeNode helper(Integer lower, Integer upper, ArrayDeque<Integer> nums) {
+        if (nums.isEmpty())
+            return null;
+        int val = nums.getLast();
+        if (val < lower || val > upper)
+            return null;
+
+        nums.removeLast();
+        TreeNode root = new TreeNode(val);
+        root.right = helper(val, upper, nums);
+        root.left = helper(lower, val, nums);
+        return root;
     }
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
-        String[] arr= data.split(",");
-        List<String> arr1 = new LinkedList<>(Arrays.asList(arr));
-        
-        return rdeserialize(arr1);
-    }
-    
-    public TreeNode rdeserialize(List<String> arr)
-    {
-        if(arr.get(0).equals("null"))
-        {
-            arr.remove(0);
+        if (data.isEmpty())
             return null;
-        }
-            
-        
-        TreeNode root = new TreeNode(Integer.parseInt(arr.get(0)));
-        arr.remove(0);
-        root.left=rdeserialize(arr);
-        root.right=rdeserialize(arr);
-        
-        
-        return root;
-        
+        ArrayDeque<Integer> nums = new ArrayDeque<Integer>();
+        for (String s : data.split("\\s+"))
+            nums.add(Integer.valueOf(s));
+        return helper(Integer.MIN_VALUE, Integer.MAX_VALUE, nums);
     }
 }
 
