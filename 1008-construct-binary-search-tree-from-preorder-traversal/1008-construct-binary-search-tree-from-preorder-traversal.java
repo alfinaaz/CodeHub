@@ -14,28 +14,42 @@
  * }
  */
 class Solution {
-    int idx=0;
-    public TreeNode bstFromPreorder(int[] preorder) {
-        
-         int n=preorder.length;
-         int high= Integer.MAX_VALUE;
-         int low= Integer.MIN_VALUE;
-         return helper(low,high,preorder,n);
-        
-    }
-    public TreeNode helper(int low, int high, int[] preorder,int n) {
-        
-        if(idx==n)
-            return null;
-        
-          int val = preorder[idx];
-           if (val < low || val > high) return null;
+  // start from first preorder element
+  int pre_idx = 0;
+  int[] preorder;
+  HashMap<Integer, Integer> idx_map = new HashMap<Integer, Integer>();
 
-           idx++;
-        
-    TreeNode root = new TreeNode(val);
-    root.left = helper(low, val,preorder,n);
-    root.right = helper(val, high,preorder,n);
+  public TreeNode helper(int in_left, int in_right) {
+    // if there is no elements to construct subtrees
+    if (in_left == in_right)
+      return null;
+
+    // pick up pre_idx element as a root
+    int root_val = preorder[pre_idx];
+    TreeNode root = new TreeNode(root_val);
+
+    // root splits inorder list
+    // into left and right subtrees
+    int index = idx_map.get(root_val);
+
+    // recursion 
+    pre_idx++;
+    // build left subtree
+    root.left = helper(in_left, index);
+    // build right subtree
+    root.right = helper(index + 1, in_right);
     return root;
-}
+  }
+
+  public TreeNode bstFromPreorder(int[] preorder) {
+    this.preorder = preorder;
+    int [] inorder = Arrays.copyOf(preorder, preorder.length);
+    Arrays.sort(inorder);
+
+    // build a hashmap value -> its index
+    int idx = 0;
+    for (Integer val : inorder)
+      idx_map.put(val, idx++);
+    return helper(0, inorder.length);
+  }
 }
