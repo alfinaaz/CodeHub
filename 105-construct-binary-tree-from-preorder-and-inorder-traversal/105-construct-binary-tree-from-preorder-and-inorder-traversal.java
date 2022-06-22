@@ -15,15 +15,17 @@
  */
 class Solution {
     int[] preorder;
+    int[] inorder;
     int idx=0;
     public TreeNode buildTree(int[] preorder, int[] inorder) {
         
         this.preorder=preorder;
-        return helper(0,inorder.length-1,inorder);
+        this.inorder=inorder;
+        return helper(0,inorder.length-1);
         
         
     }
-    public TreeNode helper(int si, int ei,int[] inorder) {
+    public TreeNode helper(int si, int ei) {
                      
           
     
@@ -46,8 +48,8 @@ class Solution {
             if(inorder[i]==rootele)
                 rootidx=i;
         }
-        root.left= helper(si,rootidx-1,inorder);
-        root.right= helper(rootidx+1,ei,inorder);
+        root.left= helper(si,rootidx-1);
+        root.right= helper(rootidx+1,ei);
         
         
         return root;
