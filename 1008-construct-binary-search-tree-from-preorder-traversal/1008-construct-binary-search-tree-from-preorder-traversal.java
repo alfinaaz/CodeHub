@@ -21,12 +21,17 @@ class Solution {
 
   public TreeNode helper(int in_left, int in_right) {
     // if there is no elements to construct subtrees
-    if (in_left == in_right)
-      return null;
+      if (in_left > in_right)
+            return null;
+      
+       int root_val = preorder[pre_idx];
+    TreeNode root = new TreeNode(root_val);
+      
+      
+    
 
     // pick up pre_idx element as a root
-    int root_val = preorder[pre_idx];
-    TreeNode root = new TreeNode(root_val);
+   
 
     // root splits inorder list
     // into left and right subtrees
@@ -35,7 +40,7 @@ class Solution {
     // recursion 
     pre_idx++;
     // build left subtree
-    root.left = helper(in_left, index);
+    root.left = helper(in_left, index-1);
     // build right subtree
     root.right = helper(index + 1, in_right);
     return root;
@@ -50,6 +55,6 @@ class Solution {
     int idx = 0;
     for (Integer val : inorder)
       idx_map.put(val, idx++);
-    return helper(0, inorder.length);
+    return helper(0, inorder.length-1);
   }
 }
