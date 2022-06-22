@@ -12,24 +12,27 @@ public class Codec {
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
         
-           return  serialize1(root,"");
         
+             StringBuilder sb= new StringBuilder();
+             serialize1(root,sb);
+             return sb.toString();
     }
     
-    public String serialize1(TreeNode root, String str)
+    public StringBuilder serialize1(TreeNode root, StringBuilder sb)
     {
         if(root==null)
         {
-            str+="null,";
-            return str;
+            sb.append("null,");
+            return sb;
         }
         
         
-            str+=str.valueOf(root.val)+",";
-            str= serialize1(root.left,str);
-            str= serialize1(root.right,str);
+            sb.append(root.val);
+            sb.append(",");
+            sb= serialize1(root.left,sb);
+            sb= serialize1(root.right,sb);
           
-        return str;
+        return sb;
     }
 
     // Decodes your encoded data to tree.
@@ -59,7 +62,6 @@ public class Codec {
         
     }
 }
-
 // Your Codec object will be instantiated and called as such:
 // Codec ser = new Codec();
 // Codec deser = new Codec();
