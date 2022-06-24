@@ -48,8 +48,8 @@ class Codec {
 	
     // Decodes your encoded data to tree.
     public Node deserialize(String data) {
-        if(data=="")
-            return null;
+      //  if(data=="")
+        //    return null;
         
         String[] arr = data.split(",");
         List<String> arr1 = new ArrayList<String>(Arrays.asList(arr));
@@ -59,8 +59,8 @@ class Codec {
     }
      public Node deserializehelper(List<String> arr1) {
          
-       //  if(arr1.size()==0)
-         //    return null;
+         if(arr1.size()==1)
+             return null;
          
          int data = Integer.parseInt(arr1.get(0));
          int numChild= Integer.parseInt(arr1.get(1));
