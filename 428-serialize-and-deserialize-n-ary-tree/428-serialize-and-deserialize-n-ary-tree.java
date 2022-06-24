@@ -59,8 +59,8 @@ class Codec {
     }
      public Node deserializehelper(List<String> arr1) {
          
-         if(arr1.size()==0)
-             return null;
+       //  if(arr1.size()==0)
+         //    return null;
          
          int data = Integer.parseInt(arr1.get(0));
          int numChild= Integer.parseInt(arr1.get(1));
