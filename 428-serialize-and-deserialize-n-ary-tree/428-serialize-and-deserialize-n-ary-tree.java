@@ -19,91 +19,101 @@ class Node {
 
 class Codec {
     // Encodes a tree to a single string.
-    class WrappableInt{
-        private int value;
-        
-        public WrappableInt(int x)
-        {
-            this.value=x;
-        }
-        public int getValue()
-        {
-            return this.value;
-        }
-        
-        public void increment()
-        {
-            this.value++;
-        }
-        
-    }
-    
-    class DO extends HashMap<Integer, Pair<Integer,Pair<Integer,Node>>>
-    {
-        
-    }
-    
     public String serialize(Node root) {
-        WrappableInt idx = new WrappableInt(1);
-        StringBuilder sb = new StringBuilder();
-         shelper(root,idx,sb,-1);
-        return sb.toString();
-    }
-    public void shelper(Node root,  WrappableInt idx, StringBuilder sb,int parentIndex)
-    {
         
         if(root==null)
-            return ;
-        
-        sb.append((char)(idx.getValue()+'0'));
-        sb.append((char)(root.val+'0'));
-        sb.append((char)(parentIndex==-1?'N':parentIndex+'0'));
-        
-        parentIndex=idx.getValue();
-       
-        for(Node child: root.children)
-        {
-             idx.increment();
-             shelper(child,idx,sb,parentIndex);
-        }
-        
-       
-        
+            return "";
+        StringBuilder sb= new StringBuilder();
+         shelper(root,sb);
+        return sb.toString();
         
     }
+    public StringBuilder shelper(Node root, StringBuilder sb)
+    {
+        
+        Queue<Node> q = new LinkedList<>();
+        Node c = new Node();
+        Node e= new Node();
+        q.add(root);
+        q.add(e);
+        
+        while(!q.isEmpty())
+        {
+            Node p= q.remove();
+            
+            if(p==e)
+            {
+                sb.append("#");
+                if(!q.isEmpty())
+                     q.add(e);
+            }
+            
+            else if(p==c)
+                sb.append("$");
+            
+            
+            else{
+                sb.append((char)(p.val+'0'));
+                for(Node child : p.children)
+                {
+                    q.add(child);
+                }
+            
+            if(q.peek()!=e)
+                
+                q.add(c);
+            }        
+        }
+        return sb;
+        
+    }
+	
     // Decodes your encoded data to tree.
     public Node deserialize(String data) {
         
-        if(data.isEmpty())
+        if (data.isEmpty()) {
             return null;
-        
-        DO nodesandParents= new DO();
-       
-        for(int i=0;i<data.length();i=i+3)
-        {
-            int id= data.charAt(i) - '0';
-            int val= data.charAt(i+1) - '0';
-            int pidx= data.charAt(i+2) -'0';
-            Pair<Integer,Pair<Integer,Node>> node = new Pair<Integer,Pair<Integer,Node>>(val,new Pair<Integer,Node>(pidx,new Node(val,new ArrayList<Node>())));
-            
-            nodesandParents.put(id,node);
-            
         }
+            
+        Node rootNode = new Node(data.charAt(0) - '0', new ArrayList<Node>());
+       dhelper(data, rootNode);
+       return rootNode;
         
-        for(int i=3;i<data.length();i+=3)
-        {
-            int id= data.charAt(i)-'0';
-            int val= data.charAt(i+1)-'0';
-            int pidx= data.charAt(i+2)-'0';
-            
-    Node child  = nodesandParents.get(id).getValue().getValue();
-    Node parent= nodesandParents.get(pidx).getValue().getValue();
-            
-            parent.children.add(child);
-            
+        
+    }
+    
+    public void dhelper(String data, Node rootNode)
+    {
+         LinkedList<Node> currentLevel = new LinkedList<Node>();
+        LinkedList<Node> prevLevel = new LinkedList<Node>();
+        currentLevel.add(rootNode);
+        Node parentNode = rootNode;
+        
+        // Process the characters in the string one at a time.
+        for (int i = 1; i < data.length(); i++) {
+            char d = data.charAt(i);
+            if (d == '#') {
+                // Special processing for end of level. We need to swap the
+                // array lists. Here, we simply re-initialize the "currentLevel"
+                // arraylist rather than clearing it.
+                prevLevel = currentLevel;
+                currentLevel = new LinkedList<Node>();
+                
+                // Since we move one level down, we take the parent as the first
+                // node on the current level.
+                parentNode = prevLevel.poll();
+            } else {
+                if (d == '$') {
+                    
+                    // Special handling for change in parent on the same level
+                    parentNode = prevLevel.poll();
+                } else {
+                    Node childNode = new Node(d - '0', new ArrayList<Node>());    
+                    currentLevel.add(childNode);
+                    parentNode.children.add(childNode);
+                }
+            }
         }
-        
-        return nodesandParents.get(1).getValue().getValue();
     }
 }
 
