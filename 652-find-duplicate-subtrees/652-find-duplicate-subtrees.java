@@ -34,12 +34,12 @@ class Solution {
             return "";
         }
         
-         String str = "(";
+         String str = ".";
         
         str += helper(root.left,ans,m);
         str += Integer.toString(root.val);
         str += helper(root.right,ans,m);
-         str += ")";
+         str += " ";
         
         
          if (m.get(str) != null && m.get(str)==1 )
