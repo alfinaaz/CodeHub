@@ -31,21 +31,22 @@ class Solution {
      
         if(root==null)
         {
-            return "";
+            return "N";
         }
         
-         String str = ".";
         
-        str += helper(root.left,ans,m);
-        str += Integer.toString(root.val);
-        str += helper(root.right,ans,m);
-         str += " ";
+        
+        String left =helper(root.left,ans,m);
+        String right=helper(root.right,ans,m);
+        
+        String str= root.val+" "+left+" "+right;
+        
         
         
          if (m.get(str) != null && m.get(str)==1 )
             ans.add(root);
       
-        if (m.containsKey(str))
+         if (m.containsKey(str))
             m.put(str, m.get(str) + 1);
         else
             m.put(str, 1);
