@@ -14,24 +14,14 @@
  * }
  */
 class Solution {
-    public String tree2str(TreeNode root) {
-        
-        if(root==null)
+    public String tree2str(TreeNode t) {
+        if(t==null)
             return "";
-        
-        String l = tree2str(root.left);
-        String r = tree2str(root.right);
-        
-        if(l=="" && r=="")
-            return String.valueOf(root.val);
-        
-        
-          else if(l!=""&& r=="")
-        return root.val+"("+l+")";
-        
-        else 
-            return root.val+"("+l+")"+"("+r+")";
-            
+        if(t.left==null && t.right==null)
+            return t.val+"";
+        if(t.right==null)
+            return t.val+"("+tree2str(t.left)+")";
+        return t.val+"("+tree2str(t.left)+")("+tree2str(t.right)+")";   
         
     }
 }
