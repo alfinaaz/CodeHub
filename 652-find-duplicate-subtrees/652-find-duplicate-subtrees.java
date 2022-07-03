@@ -31,18 +31,21 @@ class Solution {
      
         if(root==null)
         {
-            return "N";
+            return "N,";
         }
         
         
         
-        String left =helper(root.left,ans,m);
-        String right=helper(root.right,ans,m);
+//String left =helper(root.left,ans,m);
+  //      String right=helper(root.right,ans,m);
         
-        String str= root.val+" "+left+" "+right;
+    //    String str= root.val+" "+left+" "+right;
+      
+          String str = root.val+",";
         
-        
-        
+         str+= helper(root.left,ans,m);
+        str+=helper(root.right,ans,m);
+          
          if (m.get(str) != null && m.get(str)==1 )
             ans.add(root);
       
