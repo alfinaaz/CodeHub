@@ -14,51 +14,70 @@
  * }
  */
 class Solution {
+    
     public TreeNode str2tree(String s) {
         
-        return helper(s,0).getKey();
+        if (s.isEmpty()) {
+            return null;
+        }
+        
+        TreeNode root = new TreeNode();
+        Stack<TreeNode> stack = new Stack<TreeNode>(); 
+        stack.add(root);
+        
+        for (int index = 0; index < s.length();) {
+            
+            TreeNode node = stack.pop();
+            
+            // NOT_STARTED
+            if (Character.isDigit(s.charAt(index)) || s.charAt(index) == '-') {
+                
+                Pair<Integer, Integer> numberData = this.getNumber(s, index);
+                int value = numberData.getKey();
+                index = numberData.getValue();
+                
+                node.val = value;
+                
+                // Next, if there is any data left, we check for the first subtree
+                // which according to the problem statement will always be the left child.
+                if (index < s.length() && s.charAt(index) == '(') {
+                    
+                    stack.add(node);
+
+                    node.left = new TreeNode();
+                    stack.add(node.left);
+                }
+            } else if (s.charAt(index) == '(' && node.left != null) { // LEFT_DONE
+                
+                stack.add(node);
+
+                node.right = new TreeNode();
+                stack.add(node.right);
+            }
+            
+            ++index;
+        }
+        
+        return stack.empty() ? root : stack.pop();
+        
     }
     
-    public Pair<Integer,Integer> getNumber(String s , int idx)
-    {
-        boolean isNegative=false;
-        if(s.charAt(idx)=='-')
-        {
-            isNegative= true;
-            idx++;
+    public Pair<Integer, Integer> getNumber(String s, int index) {
+        
+        boolean isNegative = false;
+        
+        // A negative number
+        if (s.charAt(index) == '-') {
+            isNegative = true;
+            index++;
         }
-        int number=0;
-        while(idx<s.length() && Character.isDigit(s.charAt(idx)))
-        {
-            number= number*10+(s.charAt(idx)-'0');
-            idx++;
-        }
-        
-        return new Pair<>(isNegative?-number:number,idx);
-    }
-        
-    public Pair<TreeNode,Integer> helper(String s, int idx)
-    {
-        if(idx==s.length())
-            return new Pair<>(null,idx);
-        
-        Pair<Integer,Integer> numData = getNumber(s,idx);
-        TreeNode node = new TreeNode(numData.getKey());
-        idx= numData.getValue();
-        
-        if(idx<s.length() && s.charAt(idx)=='(')
-        {
-            Pair<TreeNode,Integer> l = helper(s,idx+1);
-            node.left= l.getKey();
-            idx=l.getValue();
-        }
-         if(idx<s.length() && s.charAt(idx)=='(')
-        {
-            Pair<TreeNode,Integer> r = helper(s,idx+1);
-            node.right= r.getKey();
-            idx=r.getValue();
+            
+        int number = 0;
+        while (index < s.length() && Character.isDigit(s.charAt(index))) {
+            number = number * 10 + (s.charAt(index) - '0');
+            index++;
         }
         
-        return new Pair<>(node,idx<s.length() && s.charAt(idx)==')'?idx+1:idx);
-    }
+        return new Pair<Integer, Integer>(isNegative ? -number : number, index);
+    } 
 }
