@@ -47,7 +47,7 @@ class Solution {
                     node.left = new TreeNode();
                     stack.add(node.left);
                 }
-            } else if (s.charAt(index) == '(' && node.left != null) { // LEFT_DONE
+            } else if (s.charAt(index) == '(' ) { // LEFT_DONE
                 
                 stack.add(node);
 
