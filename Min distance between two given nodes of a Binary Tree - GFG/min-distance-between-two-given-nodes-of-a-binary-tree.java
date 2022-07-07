@@ -108,12 +108,12 @@ class Node
 /* Should return minimum distance between a and b
    in a tree with given root*/
 class GfG {
-   // static int count=0;
+      static int count=0;
     int findDist(Node root, int a, int b) {
         // Your code here
        Node croot = findLCA(root,a,b);
-        int d1=Dist(croot,a,0);
-        int d2=Dist(croot,b,0);
+        int d1=Dist(croot,a);
+        int d2=Dist(croot,b);
         
         
         return d1+d2;
@@ -146,7 +146,7 @@ class GfG {
     return null;
     }
     
-    public int Dist(Node root,int p,int count)
+    public int Dist(Node root,int p)
     {
         
         int c2=0;
@@ -156,12 +156,12 @@ class GfG {
         if(root.data==p)
             return count;
             
-        int c1= Dist(root.left,p,count+1);
+        int c1= Dist(root.left,p);
         if(c1!=-1)
-            return c1;
+            return c1+1;
         else{
-             c2=Dist(root.right,p,count+1);
-            return c2;
+             c2=Dist(root.right,p);
+            return c2==-1?-1:c2+1;
         }
         
        
