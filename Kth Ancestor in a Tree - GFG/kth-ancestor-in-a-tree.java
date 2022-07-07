@@ -131,7 +131,7 @@ class Tree
     {
         //Write your code here
         this.k=k;
-      Node node1= kthAncestor(root,node);
+       Node node1= kthAncestor(root,node);
        
        
        return node1!=null?-1:ans;
