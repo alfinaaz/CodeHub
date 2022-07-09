@@ -14,7 +14,7 @@
  * }
  */
 class Solution {
-   int count=0;
+    int count=0;
     public int pathSum(TreeNode root, int targetSum) {
            HashMap<Integer,Integer> map= new HashMap<>();
          helper(0,root,targetSum,map);
