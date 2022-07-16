@@ -14,32 +14,13 @@
  * }
  */
 class Solution {
-    public int findBottomLeftValue(TreeNode root) {
-        ArrayList<ArrayList<TreeNode>> tree = new ArrayList<>();
-        
-        Queue<TreeNode> q = new LinkedList<>();
-        q.add(root);
-        while(q.size()>0)
-        {
-            int level=q.size();
-            ArrayList<TreeNode> l= new ArrayList<>();
-            while(level>0)
-            {
-               
-                TreeNode front= q.remove();
-                l.add(front);
-                if(front.left!=null)
-                    q.add(front.left);
-                if(front.right!=null)
-                    q.add(front.right);
-                
-                
-                level--;
-            }
-            tree.add(l);
-        }
-        
-        return tree.get(tree.size()-1).get(0).val;
-        
+   public int findBottomLeftValue(TreeNode root) {
+        return findBottomLeftValue(root, 1, new int[]{0,0});
+    }
+    public int findBottomLeftValue(TreeNode root, int depth, int[] res) {
+        if (res[1]<depth) {res[0]=root.val;res[1]=depth;}
+        if (root.left!=null) findBottomLeftValue(root.left, depth+1, res);
+        if (root.right!=null) findBottomLeftValue(root.right, depth+1, res);
+        return res[0];
     }
 }
