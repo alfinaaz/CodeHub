@@ -14,13 +14,24 @@
  * }
  */
 class Solution {
-   public int findBottomLeftValue(TreeNode root) {
-        return findBottomLeftValue(root, 1, new int[]{0,0});
+    int ans=0,h=0;
+    public int findBottomLeftValue(TreeNode root) {
+        
+       
+        
+        helper(root,1);
+        return ans;
     }
-    public int findBottomLeftValue(TreeNode root, int depth, int[] res) {
-        if (res[1]<depth) {res[0]=root.val;res[1]=depth;}
-        if (root.left!=null) findBottomLeftValue(root.left, depth+1, res);
-        if (root.right!=null) findBottomLeftValue(root.right, depth+1, res);
-        return res[0];
+    
+    public void helper(TreeNode root,int depth)
+    {
+        
+        if(h<depth)
+        {
+            h=depth;
+            ans=root.val;
+        }
+        if(root.left!=null) helper(root.left,depth+1);
+        if(root.right!=null)helper(root.right,depth+1);
     }
 }
