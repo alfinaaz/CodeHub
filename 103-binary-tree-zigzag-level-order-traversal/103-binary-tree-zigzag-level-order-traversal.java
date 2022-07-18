@@ -16,48 +16,37 @@
 class Solution {
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
         
-         List<List<Integer>> res = new ArrayList<>();
-        if(root==null)
-            return res;
+          if (root == null) {
+      return new ArrayList<List<Integer>>();
+    }
         
-       
-        LinkedList<TreeNode> q = new LinkedList<>();
-        LinkedList<Integer> level_list =  new LinkedList<>();
-        boolean isLeft=true;
-        q.add(root);
-        q.add(null);
+         List<List<Integer>> res= new ArrayList<>();
+         helper(root,0,res);
         
-        while(q.size()>0)
-        {
-            TreeNode node= q.pollFirst();
-            if(node!=null)
-            {
-                if(isLeft)
-                {
-                    
-                    level_list.addLast(node.val);           
-                }
-                else
-                {
-                    level_list.addFirst(node.val);     
-                }
-                
-                if(node.left!=null)
-                    q.addLast(node.left);
-                
-                if(node.right!=null)
-                    q.addLast(node.right);
-            }
-            else
-            {
-                res.add(level_list);
-                 level_list = new LinkedList<Integer>();
-                 if (q.size() > 0)
-                    q.addLast(null);
-                isLeft = !isLeft;
-            }
-        }
         return res;
+        
+    }
+    public void helper(TreeNode root,int level,List<List<Integer>> res)
+    {
+        if(level>=res.size())
+        {
+            LinkedList<Integer> level_list = new LinkedList<>();
+            level_list.add(root.val);
+            res.add(level_list);
+        }
+        else
+        {
+            if(level%2==0)
+                res.get(level).add(root.val);
+            
+            else
+                res.get(level).add(0,root.val);
+        }   
+            if(root.left!=null)
+                helper(root.left,level+1,res);
+            if(root.right!=null)
+                helper(root.right,level+1,res);
+                
         
     }
 }
