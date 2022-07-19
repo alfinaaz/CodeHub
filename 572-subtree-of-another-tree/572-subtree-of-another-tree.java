@@ -16,54 +16,28 @@
 class Solution {
    // String str2="";
     
-    boolean flag=false;
+  
     public boolean isSubtree(TreeNode root, TreeNode subRoot) {
         
-        String str1= serialize(subRoot,"");
-        helper(root,str1);
+        if(root == null) return false;
+        if(isIdentical(root, subRoot)) return true;
         
-        if(flag==true)
-            return true;
-        
-        return false;
-    }
-    public String helper(TreeNode root,String str1)
-    {
-         if(root==null)
-         {
-             return "N,";
-         }
-      // str2+=String.valueOf(root.val)+"," ;
-      // str2+= helper(root.left,str1);
-      // str2+= helper(root.right,str1);
-        
-        String l= helper(root.left,str1);
-        String r= helper(root.right,str1);
-        
-        String str2 =root.val+","+l+r;
-        
-        if(str2.equals(str1))
-        {
-            flag=true;
-           
-        }
-        
-        return str2;
-        
+        return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
     }
     
-    public String serialize(TreeNode root,String str1)
-    {
-        if(root==null)
-        {
-            str1+="N,";
-            return str1;
-
-        }
-        str1+=(root.val)+",";
-        str1=serialize(root.left,str1);
-        str1=serialize(root.right,str1);
+    
+    public boolean isIdentical(TreeNode p, TreeNode q){
+        if(p == null && q == null) return true;
         
-        return str1;
+        if(p == null || q == null) return false;
+        
+        if(p.val != q.val) return false;
+        
+        boolean left = isIdentical(p.left, q.left);
+        boolean right = isIdentical(p.right, q.right);
+        
+        
+        
+        return left && right;
     }
 }
