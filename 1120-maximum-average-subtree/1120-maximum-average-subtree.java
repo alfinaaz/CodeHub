@@ -25,7 +25,7 @@ class Solution {
     double max= Integer.MIN_VALUE;
     public double maximumAverageSubtree(TreeNode root) {
         
-       Pair<Integer,Double> ans= helper(root);
+        helper(root);
         return max;
     }
     public Pair<Integer,Double> helper(TreeNode root)
