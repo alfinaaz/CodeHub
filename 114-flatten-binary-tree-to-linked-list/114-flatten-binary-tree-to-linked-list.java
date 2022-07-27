@@ -79,13 +79,13 @@ class Solution {
             else
             {
                 TreeNode rightNode = currentNode.right;
-                if(tailNode!=null)
-                {
+              //  if(tailNode!=null)
+              //  {
                     tailNode.right=currentNode.right;
                     currentNode.right=currentNode.left;
                     currentNode.left=null;
                     rightNode=tailNode.right;
-                }
+              //  }
                 if(rightNode!=null)
                          stack.push(new Pair<TreeNode, Integer>(rightNode, START));
                 
