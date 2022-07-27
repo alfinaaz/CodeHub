@@ -16,32 +16,26 @@
 class Solution {
     public void flatten(TreeNode root) {
         
-         helper(root);
-        
-    }
-    public TreeNode helper(TreeNode root)
-    {
         if(root==null)
-            return null;
+            return;
         
-        if(root.left==null && root.right==null)
-                return root;
-        
-        TreeNode leftTail = helper(root.left);
-        TreeNode rightTail= helper(root.right);
-        
-        if(leftTail!=null)
+        TreeNode node = root;
+        while(node!=null)
         {
-            leftTail.right=root.right;
-            root.right=root.left;
-            root.left=null;
+            if(node.left!=null)
+            {
+                TreeNode rightMostNode=node.left;
+                while(rightMostNode.right!=null)
+                {
+                    rightMostNode=rightMostNode.right;
+                }
+            rightMostNode.right= node.right;
+            node.right= node.left;
+            node.left=null;
+            }
+            node= node.right;
+            
+            }
         }
         
-        return rightTail==null?leftTail:rightTail;
-        
-        
-        
-        
-        
     }
-}
