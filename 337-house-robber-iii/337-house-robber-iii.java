@@ -13,30 +13,46 @@
  *     }
  * }
  */
+
+class Pair<T,V>{
+    
+    T first;
+    V second;
+    
+    public Pair(T first,V second)
+    {
+        this.first=first;
+        this.second=second;
+    }
+}
 class Solution {
     HashMap<TreeNode,Integer> map = new HashMap<>();
     public int rob(TreeNode root) {
+       
+        Pair<Integer,Integer> ans= helper(root);
         
+        return Math.max(ans.first,ans.second);
+        
+        
+      
+    }
+    
+    public Pair<Integer,Integer> helper(TreeNode root)
+    {
         if(root==null)
-                return 0;
-        
-        if(map.containsKey(root))
-                return map.get(root);
-        
-        int inc= root.val;
-        
-        if(root.left!=null)
-            inc+=rob(root.left.left)+rob(root.left.right);
-        
-        if(root.right!=null)
-            inc+=rob(root.right.left)+rob(root.right.right);
+            return new Pair<Integer,Integer>(0,0);
         
         
-        int exc= rob(root.left)+rob(root.right);
+        Pair<Integer,Integer> p1=helper(root.left);
+        Pair<Integer,Integer> p2= helper(root.right);
         
-        map.put(root,Math.max(inc,exc));
+        int inc =root.val+p1.second+p2.second;
         
-        return Math.max(inc,exc);
+        int exc= Math.max(p1.first,p1.second)+Math.max(p2.first,p2.second);
+        
+        return new Pair<Integer,Integer>(inc,exc);
+        
+        
         
     }
 }
