@@ -33,7 +33,7 @@ class Solution {
         Node p = root;
         
         // Once we reach the final level, we are done
-        while ( p.left!= null) {
+        while ( p!= null) {
             
             // Iterate the "linked list" starting from the head
             // node and using the next pointers, establish the 
@@ -43,10 +43,11 @@ class Solution {
             while (q!= null) {
                 
                 // CONNECTION 1
+                if(q.left!=null)
                 q.left.next = q.right;
                 
                 // CONNECTION 2
-                if (q.next != null) {
+                if (q.right!=null && q.next != null) {
                     q.right.next = q.next.left;
                 }
                 
