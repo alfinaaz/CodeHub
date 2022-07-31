@@ -20,42 +20,59 @@ class Node {
     }
 };
 */
-import java.util.*;
+
 class Solution {
+    Node prev=null,leftmost=null;
     public Node connect(Node root) {
+        
         
         if(root==null)
             return root;
         
-        Queue<Node> q = new LinkedList<>();
-         //
-        q.add(root);
-        Node node= new Node();
-       // node=null;
-        q.add(node);
-        while(!(q.isEmpty()))
+        this.leftmost=root;
+        Node curr= leftmost;
+        while(this.leftmost!=null)
         {
-            Node f= q.remove();
-            
-             if(f.left!=null)
-                q.add(f.left);
-            
-            if(f.right!=null)
-                q.add(f.right);
-            
-           
-            if(q.peek()!=node) 
-                f.next=q.peek();
-            else
+             this.prev=null;
+             curr=this.leftmost;
+            this.leftmost=null;
+            while(curr!=null)
             {
-                 q.poll();
-                 q.add(node);
-            }
-               
-           
+                process(curr.left);
+                process(curr.right);
+                
+                curr=curr.next;
+            }        
+            
         }
         
         return root;
+       
+        
+    }
+    
+    
+    public void process(Node childNode)
+    {
+        
+       
+        
+        if(childNode!=null)
+        {
+            
+            if(prev!=null)
+            {
+                this.prev.next=childNode;
+                //prev=prev.next;
+            }
+            else
+            {
+                this.leftmost=childNode;
+            }
+            
+            this.prev=childNode;
+                
+        }
         
     }
 }
