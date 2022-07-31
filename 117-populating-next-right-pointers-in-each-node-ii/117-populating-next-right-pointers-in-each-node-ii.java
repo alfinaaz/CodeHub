@@ -23,56 +23,69 @@ class Node {
 
 class Solution {
     Node prev=null,leftmost=null;
-    public Node connect(Node root) {
-        
-        
-        if(root==null)
+       Node connect(Node root) {
+        Node temp = null;
+   
+        if (root == null)
             return root;
-        
-        this.leftmost=root;
-        Node curr= leftmost;
-        while(this.leftmost!=null)
+        Node p=root;
+        // Set nextRight for root
+        p.next = null;
+   
+        // set nextRight of all levels one by one
+        while (p != null) 
         {
-             this.prev=null;
-             curr=this.leftmost;
-            this.leftmost=null;
-            while(curr!=null)
+            Node q = p;
+   
+            /* Connect all children nodes of p and children nodes of all other
+               nodes at same level as p */
+            while (q != null) 
             {
-                process(curr.left);
-                process(curr.right);
-                
-                curr=curr.next;
-            }        
-            
-        }
-        
-        return root;
-       
-        
-    }
-    
-    
-    public void process(Node childNode)
-    {
-        
-       
-        
-        if(childNode!=null)
-        {
-            
-            if(prev!=null)
-            {
-                this.prev.next=childNode;
-                //prev=prev.next;
+                // Set the nextRight pointer for p's left child
+                if (q.left != null) 
+                {
+                   
+                    // If q has right child, then right child is nextRight of
+                    // p and we also need to set nextRight of right child
+                    if (q.right != null)
+                        q.left.next = q.right;
+                    else
+                        q.left.next = getNextRight(q);
+                }
+   
+                if (q.right != null)
+                    q.right.next = getNextRight(q);
+   
+                // Set nextRight for other nodes in pre order fashion
+                q = q.next;
             }
+   
+            // start from the first node of next level
+            if (p.left != null)
+                p = p.left;
+            else if (p.right != null)
+                p = p.right;
             else
-            {
-                this.leftmost=childNode;
-            }
-            
-            this.prev=childNode;
-                
+                p = getNextRight(p);
         }
-        
+           return root;
+    }
+     Node getNextRight(Node p) 
+    {
+        Node temp = p.next;
+   
+        /* Traverse nodes at p's level and find and return
+           the first node's first child */
+        while (temp != null) 
+        {
+            if (temp.left != null)
+                return temp.left;
+            if (temp.right != null)
+                return temp.right;
+            temp = temp.next;
+        }
+   
+        // If all the nodes at p's level are leaf nodes then return NULL
+        return null;
     }
 }
