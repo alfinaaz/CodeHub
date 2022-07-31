@@ -30,32 +30,32 @@ class Solution {
         
         // Start with the root node. There are no next pointers
         // that need to be set up on the first level
-        Node leftmost = root;
+        Node p = root;
         
         // Once we reach the final level, we are done
-        while (leftmost.left != null) {
+        while ( p.left!= null) {
             
             // Iterate the "linked list" starting from the head
             // node and using the next pointers, establish the 
             // corresponding links for the next level
-            Node head = leftmost;
+            Node q = p;
             
-            while (head != null) {
+            while (q!= null) {
                 
                 // CONNECTION 1
-                head.left.next = head.right;
+                q.left.next = q.right;
                 
                 // CONNECTION 2
-                if (head.next != null) {
-                    head.right.next = head.next.left;
+                if (q.next != null) {
+                    q.right.next = q.next.left;
                 }
                 
                 // Progress along the list (nodes on the current level)
-                head = head.next;
+                q = q.next;
             }
             
             // Move onto the next level
-            leftmost = leftmost.left;
+            p= p.left;
         }
         
         return root;
