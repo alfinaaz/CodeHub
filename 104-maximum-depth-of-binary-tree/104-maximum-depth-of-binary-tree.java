@@ -14,24 +14,27 @@
  * }
  */
 class Solution {
-    int h=0;
+   
     public int maxDepth(TreeNode root) {
-        
-             helper(root,1);
-             return h;
-        
+    LinkedList<TreeNode> stack = new LinkedList<>();
+    LinkedList<Integer> depths = new LinkedList<>();
+    if (root == null) return 0;
+
+    stack.add(root);
+    depths.add(1);
+
+    int depth = 0, current_depth = 0;
+    while(!stack.isEmpty()) {
+      root = stack.pollLast();
+      current_depth = depths.pollLast();
+      if (root != null) {
+        depth = Math.max(depth, current_depth);
+        stack.add(root.left);
+        stack.add(root.right);
+        depths.add(current_depth + 1);
+        depths.add(current_depth + 1);
+      }
     }
-    public void helper(TreeNode root,int d)
-    {
-        
-        if(root==null)
-            return;
-        
-        h=Math.max(h,d);
-        
-        helper(root.left,d+1);
-        helper(root.right,d+1);
-        
-        
-    }
+    return depth;
+}
 }
