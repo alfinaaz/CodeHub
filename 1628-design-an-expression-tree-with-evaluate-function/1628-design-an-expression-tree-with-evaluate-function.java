@@ -19,7 +19,7 @@ class TreeNode extends Node {
         this.val=val;
         left=null;
         right=null;
-        
+        this.ans=Integer.MAX_VALUE;
         
     }
 
@@ -49,25 +49,26 @@ class TreeNode extends Node {
 class TreeBuilder {
     int idx=0;
     Node buildTree(String[] postfix) {
-        String operators = "+-*/";
+        //String operators = "+-*/";
         
         Stack<TreeNode> st = new Stack<>();
         while(idx<postfix.length)
         {
-            if(operators.indexOf(postfix[idx])!=-1)
+            
+            if(postfix[idx].equals("*") || postfix[idx].equals("-") || postfix[idx].equals("/")|| postfix[idx].equals("+"))
             {
                  TreeNode r=st.pop();
                 TreeNode l= st.pop();
                 TreeNode root= new TreeNode(postfix[idx]);
                 root.left=l;
                 root.right=r;
-                root.ans=calculate(l.ans,r.ans,postfix[idx]);
+                root.ans=calculate(l,r,postfix[idx]);
                 st.push(root);      
             }
             else
             {
                 TreeNode nd= new TreeNode(postfix[idx]);
-                nd.ans=Integer.parseInt(postfix[idx]);
+               // nd.ans=Integer.parseInt(postfix[idx]);
                 st.push(nd);
             }
             idx++;
@@ -77,31 +78,34 @@ class TreeBuilder {
         return (Node)st.pop();
         
     }
-    public int calculate(int a,int b,String op)
+    public int calculate(TreeNode l,TreeNode r,String op)
     {
         
-   //     if(l.ans==Integer.MAX_VALUE)
-    //        l.ans=Integer.parseInt(l.val);
+        if(l.ans==Integer.MAX_VALUE)
+            l.ans=Integer.parseInt(l.val);
         
         
-    //    if(r.ans==Integer.MAX_VALUE)
-     //       r.ans=Integer.parseInt(r.val);
+        if(r.ans==Integer.MAX_VALUE)
+               r.ans=Integer.parseInt(r.val);
         
         
-         switch (op){
-            case "*":
-                return a*b;
-            case "/":
-                return a/b;
-            case "-":
-                return a-b;
-            default:
-                return a+b;
-                     
+        if(op.equals("*"))
+            return l.ans*r.ans;
+        
+     if(op.equals("/"))
+            return l.ans/r.ans;
+        
+        if(op.equals("+"))
+            return l.ans+r.ans;
+        
+       if(op.equals("-"))
+            return l.ans-r.ans;
+        
+        
+        return -1;
+        
     }
-       // return -1;
 };
-}
 
 
 /**
