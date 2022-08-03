@@ -18,16 +18,23 @@ class Solution {
         
         if(root==null)
             return root;
+        Queue<TreeNode> q= new LinkedList<>();
+        q.add(root);
         
-        TreeNode l=invertTree(root.left);
-        TreeNode r=invertTree(root.right);
-        
-        TreeNode temp= l;
-        root.left=r;
-        root.right=temp;
+        while(!q.isEmpty())
+        {
+            TreeNode front= q.remove();
+            TreeNode temp=front.left;
+            front.left=front.right;
+            front.right=temp;
+            
+            if(front.left!=null)
+                q.add(front.left);
+            
+            if(front.right!=null)
+                q.add(front.right);
+        }
         
         return root;
-        
-        
     }
 }
