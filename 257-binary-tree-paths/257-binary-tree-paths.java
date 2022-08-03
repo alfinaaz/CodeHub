@@ -17,15 +17,18 @@ class Solution {
     public List<String> binaryTreePaths(TreeNode root) {
         
         List<String> list= new ArrayList<>();
+       
         if(root==null)
             return list;
-        String s="";
+        
+       StringBuilder s= new StringBuilder();
         helper(root,list,s);
-        return list;
+     
+        return list ;
         
     }
     
-    public void helper(TreeNode root,List<String> list,String str)
+    public void helper(TreeNode root,List<String> list,StringBuilder str)
     {
         
         if(root==null)
@@ -33,23 +36,23 @@ class Solution {
             return;
         }
          
-        str+=root.val;
+        str.append(root.val);
      
         if(root.left==null && root.right==null)
         {
            //  str+=root.val;
-             list.add(str);
+             list.add(str.toString());
              //str = str.substring(0, str.length() - 1);
              return;
             
         }
         
-        str+="->";
+       str.append("->");
+         String save = str.toString();
         helper(root.left,list,str);
-        helper(root.right,list,str);
+        helper(root.right,list,new StringBuilder(save));
         
-          str = str.substring(0, str.length() - 1);
-          str = str.substring(0, str.length() - 1);
+         
         
         
         
