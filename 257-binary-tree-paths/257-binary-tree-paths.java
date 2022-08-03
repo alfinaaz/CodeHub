@@ -32,17 +32,19 @@ class Solution {
         {
             return;
         }
-        
+         
+        str+=root.val;
+     
         if(root.left==null && root.right==null)
         {
-             str+=root.val;
+           //  str+=root.val;
              list.add(str);
-             str = str.substring(0, str.length() - 1);
+             //str = str.substring(0, str.length() - 1);
              return;
             
         }
         
-        str+=root.val+"->";
+        str+="->";
         helper(root.left,list,str);
         helper(root.right,list,str);
         
