@@ -14,56 +14,40 @@
  * }
  */
 class Solution {
-    HashMap<Integer,Integer> map= new HashMap<>();
-    int freq=0;
     public int[] findFrequentTreeSum(TreeNode root) {
         
-        if(root==null)
-            return new int[0];
-        
-        ArrayList<Integer> list= new ArrayList<>();
-       
-        helper(root);
-        for(Map.Entry<Integer,Integer> entry : map.entrySet())
-        {
-            if(entry.getValue()>freq)
-                freq=entry.getValue();
+          HashMap<Integer,Integer> map=new HashMap<>();
+        int sum=sum(root,map);
+        int max=0;
+        int count=0;
+        for(Integer key:map.keySet()){
+            max=Math.max(max,map.get(key));
         }
-         for(Map.Entry<Integer,Integer> entry : map.entrySet())
-         {
-             if(entry.getValue()==freq)
-                 list.add(entry.getKey());
-         }
-         int[] arr= new int[list.size()];
-        
-      for(int i=0;i<list.size();i++)
-      {
-          arr[i]=list.get(i);
-      }
-           
-        
-        return arr;
-        
-    }
-    
-    public int helper(TreeNode root)
-    {
-        if(root==null)
-            return 0;
+       
+        for(Integer key:map.keySet()){
+            if(max==map.get(key)){
+                count++;
+            }
+        }
+        int[] ans=new int[count];
+        int counter=0;
+        for(Integer key:map.keySet()){
+            if(max==map.get(key)){
+                ans[counter++]=key;
+            }
+        }
         
         
-       int l=helper(root.left);
-       int r= helper(root.right);
         
-        int sum=root.val+l+r;
-        if(!map.containsKey(sum))
-            map.put(sum,1);
-        else
-            map.put(sum,map.get(sum)+1);
-        
-        
-        return sum;
-        
+        return ans;
         
     }
-}
+    public int sum(TreeNode root,HashMap<Integer,Integer> map){
+        if(root==null)return 0;
+        int lh=sum(root.left,map);
+        int rh=sum(root.right,map);
+        map.put(lh+rh+root.val,map.getOrDefault(lh+rh+root.val,0)+1);
+        return lh+rh+root.val;
+    }
+        
+    }
