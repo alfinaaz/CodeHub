@@ -28,13 +28,15 @@ class Solution {
         {
           
            TreeNode front=q.remove();
-           level.add(0,front.val);
+           level.add(front.val);
+            
+             if(front.left!=null)
+               q.add(front.left);
             
              if(front.right!=null)
                 q.add(front.right);
             
-           if(front.left!=null)
-               q.add(front.left);
+          
             
            
             
