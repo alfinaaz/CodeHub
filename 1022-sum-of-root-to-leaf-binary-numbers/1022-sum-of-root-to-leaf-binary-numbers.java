@@ -14,13 +14,14 @@
  * }
  */
 class Solution {
+    int total=0;
     public int sumRootToLeaf(TreeNode root) {
         
-        helper(root,"");
+        helper(root,0);
         return total;
         
     }
-    public void helper(TreeNode root,String s)
+    public void helper(TreeNode root,int curr)
     {
         
         
@@ -31,28 +32,16 @@ class Solution {
         
           if(root.left==null && root.right==null)
         {
-            s+=root.val;
-            calculate(s);
-            return;
+            curr= (curr<<1) |root.val;
+            total+=curr;
+             return;
         }
       
-        s+=root.val;
-        helper(root.left,s);
-        helper(root.right,s);
+        curr= (curr<<1) |root.val;
+        helper(root.left,curr);
+        helper(root.right,curr);
         
         
     }
-      int total=0;
-    public void calculate(String s)
-    {
-       int h=1; 
-      for(int i=s.length()-1;i>=0;i--)
-      {
-          total+=((s.charAt(i)-'0')*h);
-          h=h*2;
-      }
-            
-        
         
     }
-}
