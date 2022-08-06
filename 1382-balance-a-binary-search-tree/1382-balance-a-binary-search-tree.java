@@ -20,9 +20,9 @@ class Solution {
         if(root==null)
             return null;
         
-         List<Integer> arr = new ArrayList<Integer>();
-          convertToArray(root,arr);
-         return helper(0,arr.size()-1,arr);
+       //  List<Integer> arr = new ArrayList<Integer>();
+          convertToArray(root);
+         return helper(0,arr.size()-1);
         
      //   if(root.left==null && root.right==null)
        //     return root;
@@ -32,19 +32,19 @@ class Solution {
         
         
     }
-    public void convertToArray(TreeNode root,List<Integer> arr)
+    public void convertToArray(TreeNode root)
     {
         if(root==null)
             return;
      
-      convertToArray(root.left,arr);
+      convertToArray(root.left);
       arr.add(root.val);
-      convertToArray(root.right,arr);
+      convertToArray(root.right);
       
         
     }
     
-    public TreeNode helper(int si,int ei,List<Integer> arr)
+    public TreeNode helper(int si,int ei)
     {
         
         if(si>ei)
@@ -54,8 +54,8 @@ class Solution {
         int mid=(si+ei)/2;
         
         TreeNode root= new TreeNode(arr.get(mid));
-        root.left=helper(si,mid-1,arr);
-        root.right=helper(mid+1,ei,arr);
+        root.left=helper(si,mid-1);
+        root.right=helper(mid+1,ei);
         
         
         return root;
