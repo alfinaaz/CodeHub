@@ -14,33 +14,50 @@
  * }
  */
 class Solution {
- public TreeNode balanceBST(TreeNode root) {
-    List<Integer> treeArr = new ArrayList<>();
-    inOrder(root,treeArr);
-    return createBalanceFromArr(treeArr,0,treeArr.size()-1);
-}
-
-public TreeNode createBalanceFromArr(List<Integer> treeArr, int start, int end)
-{
-    if(start>end)
+    List<Integer> arr = new ArrayList<Integer>();
+    public TreeNode balanceBST(TreeNode root){
+        
+        if(root==null)
+            return null;
+        
+         List<Integer> arr = new ArrayList<Integer>();
+          convertToArray(root,arr);
+         return helper(0,arr.size()-1,arr);
+        
+     //   if(root.left==null && root.right==null)
+       //     return root;
+        
+        
+         
+        
+        
+    }
+    public void convertToArray(TreeNode root,List<Integer> arr)
     {
-        return null;
+        if(root==null)
+            return;
+     
+      convertToArray(root.left,arr);
+      arr.add(root.val);
+      convertToArray(root.right,arr);
+      
+        
     }
     
-    int mid = (start+end)/2;
-    TreeNode left = createBalanceFromArr(treeArr,start,mid-1);
-    TreeNode right = createBalanceFromArr(treeArr,mid+1,end);
-    TreeNode node = new TreeNode(treeArr.get(mid),left,right);
-    return node;
-}
-
-public void inOrder(TreeNode node, List<Integer> treeArr){
-    if(node!=null)
+    public TreeNode helper(int si,int ei,List<Integer> arr)
     {
-        inOrder(node.left,treeArr);
-        treeArr.add(node.val);
-        inOrder(node.right,treeArr);
+        
+        if(si>ei)
+            return null;
+        
+        
+        int mid=(si+ei)/2;
+        
+        TreeNode root= new TreeNode(arr.get(mid));
+        root.left=helper(si,mid-1,arr);
+        root.right=helper(mid+1,ei,arr);
+        
+        
+        return root;
     }
-}
-
 }
