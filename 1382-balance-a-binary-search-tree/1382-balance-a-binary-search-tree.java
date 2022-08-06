@@ -14,50 +14,74 @@
  * }
  */
 class Solution {
-    List<Integer> arr = new ArrayList<Integer>();
-    public TreeNode balanceBST(TreeNode root){
-        
-        if(root==null)
-            return null;
-        
-       //  List<Integer> arr = new ArrayList<Integer>();
-          convertToArray(root);
-         return helper(0,arr.size()-1);
-        
-     //   if(root.left==null && root.right==null)
-       //     return root;
-        
-        
-         
-        
-        
-    }
-    public void convertToArray(TreeNode root)
-    {
-        if(root==null)
-            return;
-     
-      convertToArray(root.left);
-      arr.add(root.val);
-      convertToArray(root.right);
-      
-        
-    }
+   int height[];
+public void updateHeight(TreeNode root){
+    int lh = root.left != null ? height[root.left.val] : -1;
+    int rh = root.right != null ? height[root.right.val] : -1;
     
-    public TreeNode helper(int si,int ei)
-    {
-        
-        if(si>ei)
-            return null;
-        
-        
-        int mid=(si+ei)/2;
-        
-        TreeNode root= new TreeNode(arr.get(mid));
-        root.left=helper(si,mid-1);
-        root.right=helper(mid+1,ei);
-        
-        
-        return root;
+    height[root.val] = Math.max(lh,rh) + 1;
+}
+
+public int getBal(TreeNode root){
+    int lh = root.left != null ? height[root.left.val] : -1;
+    int rh = root.right != null ? height[root.right.val] : -1;
+    return lh - rh;
+}
+
+public TreeNode leftRotation(TreeNode A){
+    TreeNode B = A.right;
+    TreeNode BkaLeft = B.left;
+    
+    B.left = A;
+    A.right = BkaLeft;
+    
+    B.left = getRotation(A);
+    return getRotation(B);
+}
+
+public TreeNode rightRotation(TreeNode A){
+    TreeNode B = A.left;
+    TreeNode BkaRight = B.right;
+    
+    B.right = A;
+    A.left = BkaRight;
+    
+    B.right = getRotation(A);
+    return getRotation(B);
+}
+
+public TreeNode getRotation(TreeNode root){
+    updateHeight(root);
+    if(getBal(root) >= 2){   // ll, lr
+        if(getBal(root.left) >= 1){  // ll
+            return rightRotation(root);    
+        }else{    // lr
+            root.left = leftRotation(root.left);
+            return rightRotation(root);
+        }
+    }else if(getBal(root) <= -2){  // rr,rl
+        if(getBal(root.right) <= -1){   // rr
+            return leftRotation(root);
+        }else{ // rl
+            root.right = rightRotation(root.right);
+            return leftRotation(root);
+        }
     }
+    return root;
+}
+
+public TreeNode postOrder(TreeNode root){
+    if(root == null) return null;
+    
+    root.left = postOrder(root.left);
+    root.right = postOrder(root.right);
+    
+    return getRotation(root);
+}
+
+public TreeNode balanceBST(TreeNode root) {
+    height = new int[100001];
+    return postOrder(root);
+}
+    
 }
