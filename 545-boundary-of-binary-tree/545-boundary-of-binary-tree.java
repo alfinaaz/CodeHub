@@ -27,6 +27,9 @@ public class Solution {
 
    
     public void addLeaves(List<Integer> res, TreeNode root) {
+        if(root==null)
+            return;
+        
         if (root.left==null && root.right==null) {
             res.add(root.val);
         } else {
