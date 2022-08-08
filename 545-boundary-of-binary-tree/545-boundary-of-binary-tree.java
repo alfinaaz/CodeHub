@@ -25,12 +25,9 @@
  */
 public class Solution {
 
-    public boolean isLeaf(TreeNode t) {
-        return t.left == null && t.right == null;
-    }
-
+   
     public void addLeaves(List<Integer> res, TreeNode root) {
-        if (isLeaf(root)) {
+        if (root.left==null && root.right==null) {
             res.add(root.val);
         } else {
             if (root.left != null) {
