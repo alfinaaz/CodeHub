@@ -62,13 +62,40 @@ class Solution {
         
         for(Map.Entry<Integer,List<Pair<Integer,Integer>>> entry:map.entrySet())
         {
-            List<Integer> list= new ArrayList<>();
-            for(int i=0;i<entry.getValue().size();i++)
+            
+            Collections.sort(entry.getValue(),new Comparator<Pair<Integer,Integer>>()
             {
-                list.add(entry.getValue().get(i).first);
+                @Override
+                public int compare(Pair<Integer,Integer>p1, Pair<Integer,Integer> p2)
+                {
+                    if(p1.second.equals(p2.second))
+                         return p1.first-p2.first;
+                    
+                    else
+                        return p1.second-p2.second;
+                        
+                }
+            });
+            
+            
+            List<Integer> sortedColumn = new ArrayList();
+            for(Pair<Integer,Integer> p: entry.getValue())
+            {
+                sortedColumn.add(p.first);
             }
-            ans.add(list);
-        }
+            ans.add(sortedColumn);
+            
+            
+            }
+            
+            
+            
+           // List<Integer> list= new ArrayList<>();
+           // for(int i=0;i<entry.getValue().size();i++)
+            //{
+              //  list.add(entry.getValue().get(i).first);
+            //}
+            //ans.add(list);
         return ans;
         
     }
