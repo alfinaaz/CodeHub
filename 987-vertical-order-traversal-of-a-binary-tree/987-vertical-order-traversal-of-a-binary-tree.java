@@ -45,7 +45,7 @@ class Solution {
             {
                 List<Pair<Integer,Integer>> arr = map.get(p.second.first);
                  arr.add(new Pair<Integer,Integer>(p.first.val,p.second.second));
-                 Collections.sort(arr, (p1, p2) ->p1.second==p2.second?p1.first-p2.first:p1.second-p2.second);
+               //  Collections.sort(arr, (p1, p2) ->p1.second==p2.second?p1.first-p2.first:p1.second-p2.second);
                  map.put(p.second.first,arr);
                 
             }
