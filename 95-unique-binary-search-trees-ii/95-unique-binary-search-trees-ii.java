@@ -16,40 +16,43 @@
 class Solution {
     public List<TreeNode> generateTrees(int n) {
         
-    return helper(1,n);
+        return helper(1,n);
+        
+        
     }
-     public List<TreeNode> helper(int si, int ei) {      
-         if(si>ei)
-         {
-             List<TreeNode> base = new ArrayList<>();
-             base.add(null);
-             return base;
-         }
-          List<TreeNode> ans = new ArrayList<>();
-         for(int i=si;i<=ei;i++)
-         {
-             
-             List<TreeNode> left= helper(si,i-1);
-             List<TreeNode> right= helper(i+1,ei);
-             
-             
+    public List<TreeNode> helper(int si, int ei)
+    {
+        List<TreeNode> ans= new ArrayList<>();
+        if(si>ei)
+        {
+            List<TreeNode> temp= new ArrayList<>();
+            temp.add(null);
+            return temp;
+        }
+        for(int i=si;i<=ei;i++)
+        {
+            List<TreeNode> l= helper(si,i-1);
+            List<TreeNode> r= helper(i+1,ei);
             
-             for(TreeNode l: left ){
-                 for(TreeNode r: right){
-                     TreeNode root = new TreeNode(i);
-                     root.left=l;
-                     root.right=r;
-                     ans.add(root);
-                     
-                 }
-                 
-                 
-             }
-             
-             
-         }
-         
-         return ans;
-         
-     }
+            
+            for(TreeNode lnode : l)
+            {
+                for(TreeNode rnode:r)
+                {
+                    
+                    TreeNode root= new TreeNode(i);
+                    root.left=lnode;
+                    root.right=rnode;
+                    ans.add(root);
+                    
+                }
+            }
+            
+            
+            
+        }
+        return ans;
+        
+        
+    }
 }
