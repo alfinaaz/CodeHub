@@ -16,22 +16,27 @@
 class Solution {
     public int kthSmallest(TreeNode root, int k) {
         
+        Stack<TreeNode> st = new Stack<>();
         ArrayList<Integer> arr = new ArrayList<>();
-        convertToArray(arr,root);
+        while(true)
+        {
+            if(root!=null)
+            {
+                st.push(root);
+                root=root.left;
+            }
+            else
+            {
+                if(st.isEmpty())
+                    break;
+                root=st.pop();
+                arr.add(root.val);
+                root=root.right;
+            }
+            
+        }
         
         return arr.get(k-1);
-        
-    }
-    public void convertToArray(ArrayList<Integer> arr,TreeNode root)
-    {
-        if(root==null)
-            return;
-        
-        convertToArray(arr,root.left);
-        arr.add(root.val);
-        convertToArray(arr,root.right);
-        
-        
         
     }
 }
