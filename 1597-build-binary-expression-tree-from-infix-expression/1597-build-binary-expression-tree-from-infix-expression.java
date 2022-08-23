@@ -40,8 +40,8 @@ class Solution {
     
     public Node helper(String str)
     {
-        if(idx<0)
-            return null;
+      //  if(idx<0)
+        //    return null;
         
         if(Character.isDigit(str.charAt(idx)))
         {
