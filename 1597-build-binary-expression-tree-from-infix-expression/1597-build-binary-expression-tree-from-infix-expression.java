@@ -73,7 +73,7 @@ class Solution {
  
             // If the scanned character is an
             // operand, add it to output.
-            if (Character.isLetterOrDigit(c))
+            if (Character.isDigit(c))
                 result += c;
  
             // If the scanned character is an '(',
