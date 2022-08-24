@@ -107,8 +107,8 @@ class Solution {
  
         // pop all the operators from the stack
         while (!stack.isEmpty()) {
-            if (stack.peek() == '(')
-                return "Invalid Expression";
+           // if (stack.peek() == '(')
+             //   return "Invalid Expression";
             result += stack.peek();
             stack.pop();
         }
