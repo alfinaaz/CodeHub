@@ -15,7 +15,7 @@
  */
 class Solution {
     ArrayList<Integer> list= new ArrayList<>();
- //   TreeNode st1,st2=null;
+   TreeNode st1,st2=null;
     public void recoverTree(TreeNode root) {
         
         helper(root);
@@ -41,15 +41,16 @@ class Solution {
             
         }
         
-        swap(root,2,s1,s2);
+        swap(root,s1,s2);
         
-  /*      if(st1!=null && st2!=null){
+       if(st1!=null && st2!=null){
         int temp=st1.val;
         st1.val=st2.val;
         st2.val= temp;
         
-        }*/
+        
 
+    }
     }
     public void helper(TreeNode root)
     {
@@ -65,29 +66,30 @@ class Solution {
         
     }
     
-    public void swap(TreeNode r,int count,int x,int y)
+    public void swap(TreeNode root,int x,int y)
     {
-      /*  if(root==null)
+        if(root==null)
             return;
         
-        if(root.val==s1)
+        if(root.val==x)
             st1=root;
         
-        if(root.val==s2)
+        if(root.val==y)
             st2= root;
         
         
-      swap(root.left,s1,s2);
-      swap(root.right,s1,s2);*/
+      swap(root.left,x,y);
+      swap(root.right,x,y);
         
-        if (r != null) {
+       /* if (r != null) {
       if (r.val == x || r.val == y) {
         r.val = r.val == x ? y : x;
         if (--count == 0) return;
       }
       swap(r.left, count, x, y);
       swap(r.right, count, x, y);
-    }
+    }*/
+        
   }
          
 }
