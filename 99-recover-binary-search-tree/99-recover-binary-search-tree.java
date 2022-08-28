@@ -1,46 +1,93 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
 class Solution {
-  public void inorder(TreeNode root, List<Integer> nums) {
-    if (root == null) return;
-    inorder(root.left, nums);
-    nums.add(root.val);
-    inorder(root.right, nums);
-  }
-
-  public int[] findTwoSwapped(List<Integer> nums) {
-    int n = nums.size();
-    int x = -1, y = -1;
-    boolean swapped_first_occurrence = false;
-    for(int i = 0; i < n - 1; ++i) {
-      if (nums.get(i + 1) < nums.get(i)) {
-        y = nums.get(i + 1);
+    ArrayList<Integer> list= new ArrayList<>();
+ //   TreeNode st1,st2=null;
+    public void recoverTree(TreeNode root) {
+        
+        helper(root);
+        int s1=-1;
+        int s2=-1;
+        boolean swapped_first_occurrence = false;
+        for(int i=0;i<list.size()-1;++i)
+        {
+            
+             if (list.get(i + 1) <list.get(i)) {
+        s2 = list.get(i + 1);
         if (!swapped_first_occurrence) {
             // first swap occurrence
-            x = nums.get(i);
+            s1 = list.get(i);
             swapped_first_occurrence = true;
         } else {
             // second swap occurrence
             break;
         }
       }
-    }
-    return new int[]{x, y};
-  }
+            
+            
+            
+        }
+        
+        swap(root,2,s1,s2);
+        
+  /*      if(st1!=null && st2!=null){
+        int temp=st1.val;
+        st1.val=st2.val;
+        st2.val= temp;
+        
+        }*/
 
-  public void recover(TreeNode r, int count, int x, int y) {
-    if (r != null) {
+    }
+    public void helper(TreeNode root)
+    {
+        
+        if(root==null)
+            return;
+        
+        helper(root.left);
+        list.add(root.val);
+        helper(root.right);
+        
+        
+        
+    }
+    
+    public void swap(TreeNode r,int count,int x,int y)
+    {
+      /*  if(root==null)
+            return;
+        
+        if(root.val==s1)
+            st1=root;
+        
+        if(root.val==s2)
+            st2= root;
+        
+        
+      swap(root.left,s1,s2);
+      swap(root.right,s1,s2);*/
+        
+        if (r != null) {
       if (r.val == x || r.val == y) {
         r.val = r.val == x ? y : x;
         if (--count == 0) return;
       }
-      recover(r.left, count, x, y);
-      recover(r.right, count, x, y);
+      swap(r.left, count, x, y);
+      swap(r.right, count, x, y);
     }
   }
-
-  public void recoverTree(TreeNode root) {
-    List<Integer> nums = new ArrayList();
-    inorder(root, nums);
-    int[] swapped = findTwoSwapped(nums);
-    recover(root, 2, swapped[0], swapped[1]);
-  }
+         
 }
