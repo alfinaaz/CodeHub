@@ -13,46 +13,51 @@
  *     }
  * }
  */
+class Pair<T,V>
+{
+    T key;
+    V value;
+}
 class Solution {
- public boolean isValidBST(TreeNode root) {
-        if(root==null){
-            return true;
-        }
-        BSTPair ans=BST(root);
-        return ans.isBST;
+    public boolean isValidBST(TreeNode root) {
+        
+        return helper(root).key;
+        
     }
-     public static class BSTPair{
-      long max;
-      long min;
-      boolean isBST;
-      
-      BSTPair(){
+    public Pair<Boolean,Pair<Long,Long>> helper(TreeNode root)
+    {
+                if(root==null)
+                {
+                    Pair<Boolean,Pair<Long,Long>> p= new Pair<>();
+                    p.key=true;
+                    p.value= new Pair<Long,Long>();
+                    p.value.key=Long.MAX_VALUE;
+                    p.value.value=Long.MIN_VALUE;
+                    
+                    return p;
+                }
+        
+        
+     
+           Pair<Boolean,Pair<Long,Long>> l = helper(root.left);
           
-      }
-      BSTPair(long max,long min,boolean isBST){
-          this.max=max;
-          this.min=min;
-          this.isBST=isBST;
-      }
-      
-  }
-  public static BSTPair BST(TreeNode node){
-      if(node==null){
-          return new BSTPair(Long.MIN_VALUE,Long.MAX_VALUE,true);
-      }
-      
-      BSTPair lres=BST(node.left);
-      BSTPair rres=BST(node.right);
-      
-      long mymax=Math.max(node.val,Math.max(lres.max,rres.max));
-      long mymin=Math.min(node.val,Math.min(lres.min,rres.min));
-      
-      boolean ismyBST=false;
-      if(lres.isBST==true && rres.isBST==true && lres.max<node.val && node.val<rres.min){
-          ismyBST=true;
-      }
-      
-      
-      return new BSTPair(mymax,mymin,ismyBST);
-  }
+        
+      Pair<Boolean,Pair<Long,Long>> r= helper(root.right);
+        
+        Pair<Boolean,Pair<Long,Long>> ans= new Pair<>();
+        boolean isBST=((root.val>l.value.value) && (root.val<r.value.key) && (l.key==true && r.key==true));
+        //{
+     //       ans.key=true;
+    //    }
+    //    else
+      //      ans.key=false;
+            
+         ans.key=isBST;   
+        ans.value= new Pair<Long,Long>();
+        ans.value.key=Math.min(root.val,Math.min(l.value.key,r.value.key));
+        ans.value.value=Math.max(root.val,Math.max(l.value.value,r.value.value));
+        
+     return ans;   
+        
+    }
 }
