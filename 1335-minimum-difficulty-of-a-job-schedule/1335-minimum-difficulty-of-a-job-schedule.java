@@ -42,10 +42,10 @@ class Solution {
         {
             maxDiff=Math.max(maxDiff,jobDifficulty[j]);
             res=Math.min(res,maxDiff+minDiff(j+1,n,d-1,jobDifficulty,mem));
-            
+             mem[i][d]=res;
           
         }
-        mem[i][d]=res;
+       
         
        
         return res;
