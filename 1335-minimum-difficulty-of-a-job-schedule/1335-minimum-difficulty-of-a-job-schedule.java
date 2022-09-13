@@ -4,10 +4,11 @@ class Solution {
         // Initialize the minDiff matrix to record the minimum difficulty
         // of the job schedule    
         int[] minDiffNextDay = new int[n + 1];
-        for (int i = 0; i < n; i++) {
-            minDiffNextDay[i] = Integer.MAX_VALUE;
+        minDiffNextDay[n-1]=jobDifficulty[n-1];
+        for (int i = n-2; i>=0; i--) {
+            minDiffNextDay[i] = Math.max(minDiffNextDay[i+1],jobDifficulty[i]);
         }
-        for (int daysRemaining = 1; daysRemaining <= d; daysRemaining++) {
+        for (int daysRemaining = 2; daysRemaining <= d; daysRemaining++) {
             int[] minDiffCurrDay = new int[n + 1];
             for (int i = 0; i < n; i++) {
                 minDiffCurrDay[i] = Integer.MAX_VALUE;
