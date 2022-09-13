@@ -1,56 +1,27 @@
 class Solution {
     public int minDifficulty(int[] jobDifficulty, int d) {
-        
-        int n=jobDifficulty.length;
-        if(n<d)
-            return -1;
-        
-        int[][] mem= new int[n+1][d+1];
-        for(int i=0;i<n;i++)
-        {
-            for(int j=0;j<d+1;j++)
-            {
-                mem[i][j]=-1;
+        int n = jobDifficulty.length;
+        // Initialize the minDiff matrix to record the minimum difficulty
+        // of the job schedule
+        int[][] minDiff = new int[d + 1][n + 1];
+        for (int daysRemaining = 0; daysRemaining <= d; daysRemaining++) {
+            for (int i = 0; i < n; i++) {
+                minDiff[daysRemaining][i] = Integer.MAX_VALUE;
             }
         }
-        
-        return minDiff(0,n,d,jobDifficulty,mem);
-         
-    }
-    public int minDiff(int i,int n,int d, int[] jobDifficulty,int[][] mem)
-    {
-        
-        if(mem[i][d]!=-1)
-            return mem[i][d];
-        
-        if(d==1)
-        {
-            int res=Integer.MIN_VALUE;
-            for(int j=i;j<n;j++)
-            {
-                res= Math.max(res,jobDifficulty[j]);
+        for (int daysRemaining = 1; daysRemaining <= d; daysRemaining++) {
+            for (int i = 0; i < n - daysRemaining + 1; i++) {
+                int dailyMaxJobDiff = 0;
+                for (int j = i + 1; j < n - daysRemaining + 2; j++) {
+                    // Use dailyMaxJobDiff to record maximum job difficulty
+                    dailyMaxJobDiff = Math.max(dailyMaxJobDiff, jobDifficulty[j - 1]);
+                    if (minDiff[daysRemaining - 1][j] != Integer.MAX_VALUE) {
+                        minDiff[daysRemaining][i] = Math.min(minDiff[daysRemaining][i],
+                                                             dailyMaxJobDiff + minDiff[daysRemaining - 1][j]);
+                    }
+                }
             }
-            
-            return res;
         }
-        
-        int res= Integer.MAX_VALUE;
-        
-        
-        int maxDiff=0;
-        for(int j=i;j<n-(d-1);j++)
-        {
-            maxDiff=Math.max(maxDiff,jobDifficulty[j]);
-            res=Math.min(res,maxDiff+minDiff(j+1,n,d-1,jobDifficulty,mem));
-             mem[i][d]=res;
-          
-        }
-       
-        
-       
-        return res;
-        
-        
-        
+        return minDiff[d][0] < Integer.MAX_VALUE ? minDiff[d][0] : -1;
     }
 }
