@@ -18,10 +18,10 @@ class Solution {
                 for (int j = i + 1; j < n - daysRemaining + 2; j++) {
                     // Use dailyMaxJobDiff to record maximum job difficulty
                     dailyMaxJobDiff = Math.max(dailyMaxJobDiff, jobDifficulty[j - 1]);
-                    if (minDiffNextDay[j] != Integer.MAX_VALUE) {
+                //    if (minDiffNextDay[j] != Integer.MAX_VALUE) {
                         minDiffCurrDay[i] = Math.min(minDiffCurrDay[i],
                                                      dailyMaxJobDiff + minDiffNextDay[j]);
-                    }
+                 //   }
                 }
             }
             minDiffNextDay = minDiffCurrDay;
