@@ -1,35 +1,30 @@
 class Solution {
     public int minDifficulty(int[] jobDifficulty, int d) {
-        
-           int n=jobDifficulty.length;
-        
-        if(d>n){
-            return -1;
+        int n = jobDifficulty.length;
+        // Initialize the minDiff matrix to record the minimum difficulty
+        // of the job schedule    
+        int[] minDiffNextDay = new int[n + 1];
+        for (int i = 0; i < n; i++) {
+            minDiffNextDay[i] = Integer.MAX_VALUE;
         }
-            int[][] dp= new int[n+1][d+1];
-        
-           dp[n-1][1]=jobDifficulty[n-1];
-            for(int i=n-2;i>=0;i--)
-            {
-                dp[i][1]= Math.max(dp[i+1][1],jobDifficulty[i]);
+        for (int daysRemaining = 1; daysRemaining <= d; daysRemaining++) {
+            int[] minDiffCurrDay = new int[n + 1];
+            for (int i = 0; i < n; i++) {
+                minDiffCurrDay[i] = Integer.MAX_VALUE;
             }
-        
-         for(int drem=2;drem<=d;drem++)
-         {
-             for(int i=0;i<n-(drem-1);i++)
-             {
-                dp[i][drem]=Integer.MAX_VALUE;
-                int maxdiff=0;
-                 for(int j=i+1;j<n-(drem-2);j++)
-                 {
-                     maxdiff= Math.max(maxdiff,jobDifficulty[j-1]);
-                     dp[i][drem]= Math.min(dp[i][drem],maxdiff+dp[j][drem-1]);                }
-                 
-             }
-             
-             
-         }
-        
-        return dp[0][d];
+            for (int i = 0; i < n - daysRemaining + 1; i++) {
+                int dailyMaxJobDiff = 0;
+                for (int j = i + 1; j < n - daysRemaining + 2; j++) {
+                    // Use dailyMaxJobDiff to record maximum job difficulty
+                    dailyMaxJobDiff = Math.max(dailyMaxJobDiff, jobDifficulty[j - 1]);
+                    if (minDiffNextDay[j] != Integer.MAX_VALUE) {
+                        minDiffCurrDay[i] = Math.min(minDiffCurrDay[i],
+                                                     dailyMaxJobDiff + minDiffNextDay[j]);
+                    }
+                }
+            }
+            minDiffNextDay = minDiffCurrDay;
+        }
+        return minDiffNextDay[0] < Integer.MAX_VALUE ? minDiffNextDay[0] : -1;
     }
 }
