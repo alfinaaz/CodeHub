@@ -35,7 +35,7 @@ class Solution {
 
         // Now the index of the first positive number 
         // is equal to first missing positive.
-        for (int i = 1; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             if (nums[i] > 0)
                 return i+1;
         }
