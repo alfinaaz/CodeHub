@@ -1,8 +1,6 @@
 class Solution {
     public List<Integer> findAnagrams(String s, String p) {
         
-        
-   
         List<Integer> ans = new ArrayList<>();
         
              if(s.length()<p.length())
@@ -27,14 +25,14 @@ class Solution {
                 ans.add(i);
             }
             
-            sarr[s.charAt(i)-'a']--;
+            sarr[s.charAt(i)-'a']--; //we do i++ 
             sarr[s.charAt(i+p.length())-'a']++;
             
         }
         
         if(isAnag(sarr,parr))
         {
-            ans.add(s.length()-p.length());
+            ans.add(i);
         }
         
         return ans;
